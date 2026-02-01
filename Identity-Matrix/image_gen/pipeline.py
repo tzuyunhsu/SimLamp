@@ -33,7 +33,7 @@ GOOGLE_MODELS = [
 ]
 
 # The exact prompt as specified (word for word)
-SPRITE_SHEET_PROMPT = """Generate one pixel-art sprite sheet PNG from the provided single-person photo in a Pokemon GBA overworld sprite style.
+SPRITE_SHEET_PROMPT = """Generate one pixel-art sprite sheet PNG from the provided lamp photo in a Pokemon GBA overworld sprite style.
 
 ## ABSOLUTE DETERMINISM (NO VARIATION)
 - All 16 frames must be structurally identical across runs: same grid, same anchors, same character scale, same occupied pixel area, same direction per row.
@@ -53,11 +53,6 @@ SPRITE_SHEET_PROMPT = """Generate one pixel-art sprite sheet PNG from the provid
 ## FIXED CHARACTER SCALE + ANCHORS (NON-NEGOTIABLE)
 Inside each 64x64 cell:
 - Total character height: 58 px (identical in all frames)
-- Head: 15 px, Torso: 19 px, Legs: 20 px, Feet thickness: 4 px
-- Anchors for ALL frames:
-  - Feet baseline: y = 60
-  - Head top: y = 3
-  - Character centerline: x = 32
 - The character must be centered on x = 32 in every cell and grounded on y = 60 in every cell.
 - No scaling, no squash/stretch, no perspective.
 
@@ -449,7 +444,7 @@ def generate_sprite_sheet_openai(input_image_path: str) -> Image.Image:
     base64_image = base64.b64encode(image_bytes).decode("utf-8")
     
     # Prompt for sprite sheet generation with reference image
-    prompt = """Generate a pixel-art sprite sheet PNG based on the person in the reference image.
+    prompt = """Generate a pixel-art sprite sheet PNG based on the lamp in the reference image.
 Style: Pokemon GBA overworld sprite style.
 
 Requirements:
@@ -460,10 +455,10 @@ Requirements:
 - Row 3: Right-facing walk cycle (4 frames)
 - Row 4: Back-facing walk cycle (4 frames)
 
-The character should match the person in the reference image:
-- Preserve hair color/style
-- Preserve glasses if present
-- Preserve clothing colors and style
+The character should match the lamp in the reference image:
+- Preserve lamp base color/style
+- Preserve lamp shade if present
+- Preserve lamp bulb if present
 - Use clean pixel art with 1px dark outline
 - No anti-aliasing, no gradients"""
 
